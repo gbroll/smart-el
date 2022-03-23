@@ -1,7 +1,9 @@
 #include <Arduino.h>
 
-void setup() {
-  // put your setup code here, to run once:
+void setup()
+{
+    Serial1.begin(115200);
+
 }
 
 void loop() {
