@@ -1,10 +1,13 @@
 #include <Arduino.h>
 #include "WiFi.h"
+#include <PubSubClient.h>
 #include "../secrets.h"
 
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 4
 #endif
+
+int test = MQTTCONNECT;
 
 int status = WL_IDLE_STATUS;
 void flash_led_hold();
@@ -13,9 +16,14 @@ void setup()
 {
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, LOW);
+    
     Serial.begin(115200);
+    Serial.print("LED_BUILTIN is at PIN: ");
+    Serial.print(LED_BUILTIN);
+
     while (status != WL_CONNECTED) 
     {
+        Serial.print(MQTTCONNECT);
         Serial.print("Attempting to connect to SSID: ");
         Serial.println(SECRET_SSID);
         status = WiFi.begin(SECRET_SSID, SECRET_PASS);
