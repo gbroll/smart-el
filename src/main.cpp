@@ -11,6 +11,8 @@ int test = MQTTCONNECT;
 
 int status = WL_IDLE_STATUS;
 void flash_led_hold();
+void connect_wifi();
+void connect_mqtt();
 
 void setup()
 {
@@ -30,14 +32,46 @@ void setup()
         delay(10000);
     }
 
-    Serial.println("Setup done");
+    Serial.println("Connected to WiFi, local IP is: ");
+    Serial.println(WiFi.localIP());
     flash_led_hold();
 
+    WiFiClient wifiClient;
+    PubSubClient MQTTClient(wifiClient);
+
+    IPAddress MQTTServer(SECRET_MQTTSERVER);
+    MQTTClient.setServer(MQTTServer, SECRET_MQTTPORT);
+    while (!MQTTClient.connected())
+    {
+        Serial.print("Attempting MQTT connection...");
+        // Create a random client ID
+        String clientId = "ESP32client-";
+        clientId += String(random(0xffff), HEX);
+        // Attempt to connect
+        if (MQTTClient.connect(clientId.c_str()))
+        {
+            Serial.println("connected");
+            flash_led_hold();
+            // Once connected, publish an announcement...
+            MQTTClient.publish("outTopic", "ESP32 connected");
+            // ... and resubscribe
+            MQTTClient.subscribe("inTopic");
+        }
+        else
+        {
+            Serial.print("failed, rc=");
+            Serial.print(MQTTClient.state());
+            Serial.println(" try again in 5 seconds");
+            // Wait 5 seconds before retrying
+            delay(5000);
+        }
+    }
 }
 
 void loop() 
 {
     delay(5000);
+
 }
 
 void flash_led()
