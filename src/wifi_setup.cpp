@@ -1,8 +1,6 @@
 #include "WiFi.h"
 #include "../secrets.h"
 
-
-
 void WiFiConnectLoop(int timeOutSeconds = 30)
 {
     int status = WiFi.status();

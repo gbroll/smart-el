@@ -3,7 +3,7 @@
 #include <PubSubClient.h>
 #include "../secrets.h"
 #include "led.h"
-#include <EEPROM.h>
+#include "telegram.h"
 
 #define RX_PIN 16
 
@@ -47,6 +47,10 @@ void setup()
 void loop() 
 {
     
+    Telegram telegram;
+    telegram.ReadFromSerial(Serial2);
+
+    /* 
     unsigned long now = millis();
     if ((now-timings.loopLastRun) > timings.loopIntervalMilliSeconds)
     {
@@ -65,7 +69,7 @@ void loop()
         }
 
  
-    }
+    } */
 
 }
 
