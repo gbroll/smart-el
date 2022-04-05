@@ -23,6 +23,9 @@ WiFiClient wifiClient;
 PubSubClient MQTTClient(wifiClient);
 Timeinfo timings;
 
+byte MQTT_SERVER[4] = SECRET_MQTTSERVER;
+int MQTT_PORT = SECRET_MQTTPORT;
+
 void setup()
 { 
     
@@ -37,8 +40,8 @@ void setup()
     WiFiConnectLoop(30);
     led.flash();
 
-    IPAddress MQTTServer(SECRET_MQTTSERVER);
-    MQTTClient.setServer(MQTTServer, SECRET_MQTTPORT);
+    IPAddress MQTTServer(MQTT_SERVER);
+    MQTTClient.setServer(MQTTServer, MQTT_PORT);
     MQTTConnectLoop(MQTTClient, 30);
 
        

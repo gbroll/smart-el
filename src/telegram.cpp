@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <telegram.h>
+#include <CRC16.h>
 
 void Telegram::ReadFromSerial(HardwareSerial serial)
 {
@@ -23,7 +24,7 @@ void Telegram::ReadFromSerial(HardwareSerial serial)
 
 unsigned int Telegram::calcCRC()
 {
-
+    crc16.getCRC();
 }
 
 unsigned int Telegram::getCRC()

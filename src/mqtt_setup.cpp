@@ -3,6 +3,9 @@
 #include <PubSubClient.h>
 #include "../secrets.h"
 
+char* mqtt_user = MQTT_USER;
+char* mqtt_pass = mqtt_pass;
+
 void MQTTConnectLoop(PubSubClient &client, int timeOutSeconds)
 {
     if (client.connected()) return;
@@ -14,7 +17,7 @@ void MQTTConnectLoop(PubSubClient &client, int timeOutSeconds)
         String clientId = "ESP32client-";
         clientId += String(random(0xffff), HEX);
         // Attempt to connect
-        if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASS))
+        if (client.connect(clientId.c_str(), mqtt_user, mqtt_pass))
         {
             Serial.println("connected");
             // Once connected, publish an announcement...
