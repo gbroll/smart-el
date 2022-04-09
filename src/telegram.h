@@ -4,16 +4,20 @@
 class Telegram
 {
 private:
-    char bytes[512];
+    char byteArray[512];
+    uint8_t *byteArrayPtr;
+
     unsigned int index = 0;
     unsigned int length = 0;
-    CRC16 crc16;
     static const char terminatingChar = '!';
     bool completed = false;
     
-    unsigned int calcCRC();
-    unsigned int getCRC();
+    CRC16 crc16;
+    uint8_t crc16Buffer[];
+    uint16_t  calcCRC();
+    uint16_t  getSentCRC();
     void VerifyCRC();
+    bool verified = false;
 
 
 public:

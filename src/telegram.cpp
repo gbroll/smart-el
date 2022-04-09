@@ -10,32 +10,34 @@ void Telegram::ReadFromSerial(HardwareSerial serial)
         if (serial.available())
         {
             //c = serial.read();
-            length = serial.readBytesUntil(terminatingChar, bytes, 512);
+            length = serial.readBytesUntil(terminatingChar, byteArray, 512);
             if (length > 0) 
             {
+                serial.readBytes(crc16Buffer, 2);
                 completed = true;
             }
         }
     }
-
     VerifyCRC();
 
 }
 
-unsigned int Telegram::calcCRC()
+uint16_t Telegram::calcCRC()
 {
-    crc16.getCRC();
+    crc16.add(byteArrayPtr, length);
+    return crc16.getCRC();
 }
 
-unsigned int Telegram::getCRC()
+uint16_t Telegram::getSentCRC()
 {
-
+    return (uint16_t)(crc16Buffer[1] << 8) + crc16Buffer[0];
 }
 
 void Telegram::VerifyCRC()
 {
 
     if (!completed) return;
+    uint16_t calculatedCRC = calcCRC();
 
 
 }
