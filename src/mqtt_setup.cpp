@@ -4,7 +4,7 @@
 #include "../secrets.h"
 
 char* mqtt_user = MQTT_USER;
-char* mqtt_pass = mqtt_pass;
+char* mqtt_pass = MQTT_PASS;
 
 void MQTTConnectLoop(PubSubClient &client, int timeOutSeconds)
 {

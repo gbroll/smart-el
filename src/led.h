@@ -1,4 +1,6 @@
 #include <Arduino.h>
+#ifndef LED_H
+#define LED_H
 
 class LED
 {
@@ -15,3 +17,5 @@ public:
     bool isOff();
 
 };
+
+#endif
